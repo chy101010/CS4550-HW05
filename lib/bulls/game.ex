@@ -1,10 +1,10 @@
-defmodule BullsWeb.Game do
+defmodule Bulls.Game do
 
     # create new/reset
     def new do
         %{
             game: true,
-            secret: random_secret("", ["1", "2", "3", "4", "5", "6", "7", "8", "9"]),
+            secret: randomSecret("", ["1", "2", "3", "4", "5", "6", "7", "8", "9"]),
             guesses: MapSet.new(),
             result: [],
             message: {:ok, "Enter 4 digits!"},
@@ -80,7 +80,7 @@ defmodule BullsWeb.Game do
         {status, computed} = computeGuess(st.secret, guess, 0, 0, 0);
         state0 = %{st | 
                     guesses: MapSet.put(st.guesses, guess), 
-                    result: st.result ++ [computed],
+                    result: st.result ++ [%{guess: guess, result: computed}],
                     lives: st.lives - 1};
         cond do
             (status == 1) ->
@@ -93,13 +93,13 @@ defmodule BullsWeb.Game do
     end 
 
     # Select Secret
-    def random_secret(acc, nums) do
+    def randomSecret(acc, nums) do
         if String.length(acc) < 4 do
             random = Enum.random(nums);
             if(String.length(acc) == 0) do
-                 random_secret(acc <> random, nums -- [random] ++ [0]);
+                 randomSecret(acc <> random, nums -- [random] ++ [0]);
             else 
-                random_secret(acc <> random, nums -- [random]);
+                randomSecret(acc <> random, nums -- [random]);
             end 
         else 
             acc

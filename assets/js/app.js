@@ -78,9 +78,9 @@ function Bulls() {
   
   let rows = [];
   for (let i = 0; i < state.guesses.length; i++) {
-    let oldGuess = <td>{state.guesses[i]}</td>;
-    let message = <td>{state.result[i]}</td>;
-    rows.push(<tr>{[oldGuess, message]}</tr>);
+    let oldGuess = <td>{state.result[i].guess}</td>;
+    let message = <td>{state.result[i].result}</td>;
+    rows.push(<tr key={i} >{[oldGuess, message]}</tr>);
   }
   return (
     <div className="App">
@@ -92,7 +92,7 @@ function Bulls() {
       <input onClick={handleClickReset} className="button button-clear" type="button" value="Reset" />
       <table>
         <thead>
-          <tr>
+          <tr key={50}>
             <td>Guess</td>
             <td>Result</td>
           </tr>

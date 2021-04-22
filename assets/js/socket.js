@@ -32,6 +32,7 @@ let state = {
 function state_update(st) {
   state = st;
   if (callback) {
+    console.log(state);
     callback(st);
   }
 }
